@@ -29,6 +29,7 @@
           <p><strong>Place block:</strong> Right click</p>
           <p><strong>Pick block:</strong> 1-8 or scroll</p>
           <p><strong>See yourself:</strong> V</p>
+          <p><strong>Build helper:</strong> B (menu) · H · T</p>
           <p><strong>Save / Load:</strong> O / L</p>
           <p><strong>Exit mouse:</strong> Esc</p>
         </div>
@@ -77,9 +78,31 @@
       <span><b>V</b> See yourself</span>
       <span><b>H</b> House</span>
       <span><b>T</b> Tree</span>
-      <span><b>B</b> Tower</span>
+      <span><b>B</b> Build menu</span>
       <span><b>M</b> Mute</span>
     </div>
+    <div id="build-menu">
+      <div class="build-panel">
+        <h2>Build Helper</h2>
+        <p>What should I build in front of you?</p>
+        <div class="build-options">
+          <button class="build-option" data-build="house">
+            <span class="build-icon" style="background:#9c6b3f"></span>
+            <span>House</span>
+          </button>
+          <button class="build-option" data-build="tree">
+            <span class="build-icon" style="background:#3f8f3a"></span>
+            <span>Tree</span>
+          </button>
+          <button class="build-option" data-build="tower">
+            <span class="build-icon" style="background:#8c8c8c"></span>
+            <span>Tower</span>
+          </button>
+        </div>
+        <button id="build-close" class="creator-btn ghost">Back to game</button>
+      </div>
+    </div>
+    <div id="intro-tip"></div>
     <div id="toast"></div>
     <canvas id="game"></canvas>
     <script type="module" src="/src/main.js"></script>

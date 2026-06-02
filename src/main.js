@@ -315,7 +315,7 @@ document.addEventListener('keydown', (e) => {
   if (e.code === 'KeyM') toast(sfx.toggleMute() ? 'Sound off' : 'Sound on');
   if (e.code === 'KeyH') runHelper('house');
   if (e.code === 'KeyT') runHelper('tree');
-  if (e.code === 'KeyB') runHelper('tower');
+  if (e.code === 'KeyB') openBuildMenu();
 });
 
 // Ask the build-helper agent to construct something in front of the player.
@@ -326,6 +326,31 @@ function runHelper(what) {
   sfx.save();
   toast(`Helper built a ${what}!`);
 }
+
+// ---- Build menu (clickable helper) ----
+const buildMenu = document.getElementById('build-menu');
+let buildMenuOpen = false;
+
+function openBuildMenu() {
+  buildMenuOpen = true;
+  buildMenu.classList.add('open');
+  document.exitPointerLock(); // release the mouse so buttons are clickable
+}
+
+function closeBuildMenu(relock = true) {
+  buildMenuOpen = false;
+  buildMenu.classList.remove('open');
+  if (relock) player.lock();
+}
+
+buildMenu.querySelectorAll('.build-option').forEach((btn) => {
+  btn.addEventListener('click', () => {
+    sfx.click();
+    runHelper(btn.dataset.build);
+    closeBuildMenu();
+  });
+});
+document.getElementById('build-close').addEventListener('click', () => closeBuildMenu());
 
 // ---- Save / load ----
 const SAVE_KEY = 'hachGameSave';
@@ -392,15 +417,37 @@ window.addEventListener('beforeunload', () => saveGame(false));
 
 const hud = document.getElementById('hud');
 
+// ---- First-play tip ----
+const TIP_KEY = 'hachSeenTip';
+const introTip = document.getElementById('intro-tip');
+let introTipTimer = null;
+function maybeShowIntroTip() {
+  if (localStorage.getItem(TIP_KEY)) return;
+  localStorage.setItem(TIP_KEY, '1');
+  introTip.innerHTML =
+    'Tip: press <b>H</b> for a house, <b>T</b> for a tree, or <b>B</b> to open the Build Helper. Look for the wandering creatures too!';
+  introTip.classList.add('show');
+  clearTimeout(introTipTimer);
+  introTipTimer = setTimeout(() => introTip.classList.remove('show'), 8000);
+}
+
 document.addEventListener('pointerlockchange', () => {
   if (player.locked) {
     overlay.classList.add('hidden');
     crosshair.classList.add('active');
     hud.classList.add('active');
+    buildMenu.classList.remove('open');
+    buildMenuOpen = false;
+    maybeShowIntroTip();
+  } else if (buildMenuOpen) {
+    // Paused only to use the build menu: keep the main menu hidden.
+    crosshair.classList.remove('active');
+    hud.classList.remove('active');
   } else {
     overlay.classList.remove('hidden');
     crosshair.classList.remove('active');
     hud.classList.remove('active');
+    introTip.classList.remove('show');
     saveGame(false); // quietly save whenever the player pauses
   }
 });
