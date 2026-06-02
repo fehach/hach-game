@@ -405,6 +405,7 @@ function loadGame(announce = true) {
     loadWorld(data.worldId || currentWorldId);
     if (data.characterId) setCharacter(data.characterId);
     if (Array.isArray(data.edits)) world.applyEdits(data.edits);
+    player.respawn(); // re-place above any saved structures so we never start stuck
     if (announce) toast('Loaded your world!');
     return true;
   } catch (err) {

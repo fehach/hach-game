@@ -40,8 +40,19 @@ export class Player {
 
   // Drop the player above the center of the current world.
   respawn() {
-    const startH = this.world.surfaceHeight(0, 0);
-    this.position.set(0.5, startH + 2, 0.5);
+    // surfaceHeight only knows the terrain, so climb above any *placed* blocks
+    // (e.g. a build-helper house at spawn) to make sure we never start trapped.
+    const gx = 0;
+    const gz = 0;
+    let y = this.world.surfaceHeight(gx, gz);
+    let guard = 0;
+    while (
+      guard++ < 256 &&
+      (this.world.isSolidVoxel(gx, y, gz) || this.world.isSolidVoxel(gx, y + 1, gz))
+    ) {
+      y++;
+    }
+    this.position.set(gx + 0.5, y + 2, gz + 0.5);
     this.velocity.set(0, 0, 0);
     this.onGround = false;
   }
