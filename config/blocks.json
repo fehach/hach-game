@@ -1,0 +1,13 @@
+{
+  "_help": "Each block has a name and a color. Change the color (hex like #FF0000) to recolor a block. Add new blocks by copying a line and giving it a new id and color!",
+  "blocks": {
+    "grass": { "name": "Grass", "color": "#5fa83c" },
+    "dirt": { "name": "Dirt", "color": "#8a5a2b" },
+    "stone": { "name": "Stone", "color": "#8c8c8c" },
+    "sand": { "name": "Sand", "color": "#e0cf8a" },
+    "snow": { "name": "Snow", "color": "#f4fbff" },
+    "wood": { "name": "Wood", "color": "#9c6b3f" },
+    "leaves": { "name": "Leaves", "color": "#3f8f3a" },
+    "water": { "name": "Water", "color": "#3a7fd5" }
+  }
+}

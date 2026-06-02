@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hach Game - Player's Manual</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: "Trebuchet MS", "Comic Sans MS", "Segoe UI", sans-serif;
+        background: linear-gradient(160deg, #aee2ff 0%, #d9f5d0 100%);
+        color: #1f2d3d;
+        padding: 40px 20px 80px;
+        line-height: 1.6;
+      }
+      .page { max-width: 820px; margin: 0 auto; }
+      h1 {
+        font-size: 56px;
+        text-align: center;
+        color: #2a9d8f;
+        text-shadow: 3px 3px 0 #fff;
+        letter-spacing: 4px;
+      }
+      .tagline { text-align: center; font-size: 20px; margin-bottom: 36px; color: #335; }
+      .card {
+        background: #fff;
+        border: 4px solid #2a9d8f;
+        border-radius: 18px;
+        padding: 24px 28px;
+        margin-bottom: 24px;
+        box-shadow: 0 8px 0 rgba(42, 157, 143, 0.25);
+      }
+      .card h2 {
+        font-size: 30px;
+        color: #e76f51;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .step-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        background: #ffd166;
+        border-radius: 50%;
+        font-size: 24px;
+        color: #1f2d3d;
+        flex: none;
+      }
+      ul { list-style: none; }
+      li { margin: 10px 0; font-size: 19px; display: flex; align-items: center; gap: 12px; }
+      .key {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 42px;
+        height: 42px;
+        padding: 0 10px;
+        background: #264653;
+        color: #fff;
+        border-radius: 8px;
+        font-weight: bold;
+        font-size: 16px;
+        box-shadow: 0 4px 0 #16303b;
+        flex: none;
+      }
+      .mouse { background: #e76f51; box-shadow: 0 4px 0 #b8543b; }
+      .blocks { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; }
+      .block {
+        width: 90px;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .swatch {
+        width: 70px;
+        height: 70px;
+        border-radius: 10px;
+        margin: 0 auto 6px;
+        border: 3px solid rgba(0,0,0,0.15);
+        box-shadow: inset -8px -8px 0 rgba(0,0,0,0.12);
+      }
+      .tip {
+        background: #fff7e0;
+        border-left: 6px solid #ffd166;
+        padding: 14px 18px;
+        border-radius: 10px;
+        font-size: 18px;
+        margin-top: 10px;
+      }
+      code {
+        background: #eef3f7;
+        padding: 2px 8px;
+        border-radius: 6px;
+        font-size: 16px;
+        color: #b8543b;
+      }
+      .big-btn {
+        display: block;
+        width: fit-content;
+        margin: 10px auto 0;
+        background: #2a9d8f;
+        color: #fff;
+        text-decoration: none;
+        font-size: 22px;
+        padding: 14px 40px;
+        border-radius: 12px;
+        box-shadow: 0 6px 0 #1f7a6f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <h1>HACH GAME</h1>
+      <p class="tagline">The Official Player's Manual</p>
+
+      <div class="card">
+        <h2><span class="step-num">1</span> Start the Game</h2>
+        <ul>
+          <li>Click the big green <strong>Play</strong> button.</li>
+          <li>The game grabs your mouse so you can look around.</li>
+          <li>Press the <span class="key">Esc</span> key any time to get your mouse back.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2><span class="step-num">2</span> Move Around</h2>
+        <ul>
+          <li><span class="key">W</span> Walk forward</li>
+          <li><span class="key">S</span> Walk backward</li>
+          <li><span class="key">A</span> Step left</li>
+          <li><span class="key">D</span> Step right</li>
+          <li><span class="key">Space</span> Jump up</li>
+          <li><span class="mouse key">Mouse</span> Move your mouse to look around</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2><span class="step-num">3</span> Break and Build</h2>
+        <ul>
+          <li><span class="mouse key">Left</span> Click to <strong>break</strong> the block you are looking at.</li>
+          <li><span class="mouse key">Right</span> Click to <strong>build</strong> a new block.</li>
+        </ul>
+        <p class="tip">A black square shows which block you are pointing at. Get close and aim with the <strong>+</strong> in the middle of the screen!</p>
+      </div>
+
+      <div class="card">
+        <h2><span class="step-num">4</span> Pick Your Block</h2>
+        <ul>
+          <li>Look at the bar at the bottom of the screen.</li>
+          <li>Press number keys <span class="key">1</span><span class="key">2</span><span class="key">3</span> ... to choose a block.</li>
+          <li>Or roll the <span class="mouse key">Wheel</span> on your mouse to switch blocks.</li>
+        </ul>
+        <div class="blocks">
+          <div class="block"><div class="swatch" style="background:#5fa83c"></div>Grass</div>
+          <div class="block"><div class="swatch" style="background:#8a5a2b"></div>Dirt</div>
+          <div class="block"><div class="swatch" style="background:#8c8c8c"></div>Stone</div>
+          <div class="block"><div class="swatch" style="background:#e0cf8a"></div>Sand</div>
+          <div class="block"><div class="swatch" style="background:#f4fbff"></div>Snow</div>
+          <div class="block"><div class="swatch" style="background:#9c6b3f"></div>Wood</div>
+          <div class="block"><div class="swatch" style="background:#3f8f3a"></div>Leaves</div>
+          <div class="block"><div class="swatch" style="background:#3a7fd5"></div>Water</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span class="step-num">5</span> Be Your Character</h2>
+        <ul>
+          <li>On the start screen, pick a character like <strong>Hero</strong> or <strong>Robot</strong>.</li>
+          <li>Press the <span class="key">V</span> key in the game to see yourself from behind.</li>
+          <li>Press <span class="key">V</span> again to go back to first-person view.</li>
+        </ul>
+        <p class="tip">Grown-ups can add new characters or change colors in <code>config/characters.json</code>.</p>
+      </div>
+
+      <div class="card">
+        <h2><span class="step-num">6</span> Make It Your Own</h2>
+        <p>Want pink grass or a giant tower? You can change the game yourself! Ask a grown-up to open the <code>config</code> folder.</p>
+        <ul>
+          <li><code>blocks.json</code> changes block colors. Try grass color <code>#ff00ff</code> for pink!</li>
+          <li><code>worlds.json</code> changes the world. Set it to <code>desert</code> or <code>snow</code>.</li>
+        </ul>
+        <p class="tip">After you change a file, <strong>save it</strong> and <strong>refresh</strong> the game to see the magic.</p>
+      </div>
+
+      <div class="card">
+        <h2><span class="step-num">7</span> Save Your World</h2>
+        <ul>
+          <li>Press <span class="key">O</span> to <strong>save</strong> everything you built.</li>
+          <li>Press <span class="key">L</span> to <strong>load</strong> your saved world.</li>
+          <li>Press <span class="key">M</span> to turn the <strong>sound</strong> on or off.</li>
+        </ul>
+        <p class="tip">Your world also saves all by itself, so your buildings will be waiting for you next time! Watch the sky too &mdash; it slowly turns from day to night.</p>
+      </div>
+
+      <div class="card">
+        <h2><span class="step-num">8</span> Fun Challenges</h2>
+        <ul>
+          <li>Build a house with a door you can walk through.</li>
+          <li>Dig a deep tunnel into a hill.</li>
+          <li>Make the tallest tower you can and jump off it.</li>
+          <li>Build a bridge across a valley.</li>
+        </ul>
+      </div>
+
+      <a class="big-btn" href="/">Back to the Game</a>
+    </div>
+  </body>
+</html>

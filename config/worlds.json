@@ -1,0 +1,27 @@
+{
+  "_help": "Worlds (themes) decide what the ground looks like. 'surfaceBlock' is the top layer, 'groundBlock' is underneath. 'skyColor' is the sky. 'hilliness' (0 to 1) controls how bumpy the land is.",
+  "defaultWorld": "plains",
+  "worlds": {
+    "plains": {
+      "name": "Grassy Plains",
+      "surfaceBlock": "grass",
+      "groundBlock": "dirt",
+      "skyColor": "#87ceeb",
+      "hilliness": 0.4
+    },
+    "desert": {
+      "name": "Desert",
+      "surfaceBlock": "sand",
+      "groundBlock": "sand",
+      "skyColor": "#ffe9b0",
+      "hilliness": 0.25
+    },
+    "snow": {
+      "name": "Snowy Mountains",
+      "surfaceBlock": "snow",
+      "groundBlock": "stone",
+      "skyColor": "#dff0ff",
+      "hilliness": 0.8
+    }
+  }
+}

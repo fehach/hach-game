@@ -1,0 +1,352 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  background: #87ceeb;
+}
+
+#game {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+#overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(160deg, #1e3a5f 0%, #0d1b2a 100%);
+  z-index: 10;
+}
+
+#overlay.hidden {
+  display: none;
+}
+
+#menu {
+  text-align: center;
+  color: #fff;
+  padding: 48px;
+}
+
+#menu h1 {
+  font-size: 72px;
+  letter-spacing: 8px;
+  text-shadow: 4px 4px 0 #2a9d8f;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  font-size: 18px;
+  opacity: 0.8;
+  margin-bottom: 32px;
+}
+
+.picker-label {
+  font-size: 16px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin-bottom: 14px;
+}
+
+#world-picker {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.world-btn {
+  width: 140px;
+  padding: 14px 10px 16px;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  background: linear-gradient(160deg, var(--sky) 0%, rgba(255, 255, 255, 0.1) 100%);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  transition: transform 0.1s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.world-btn:hover {
+  transform: translateY(-4px);
+}
+
+.world-btn.selected {
+  border-color: #ffd166;
+  box-shadow: 0 0 16px #ffd166;
+}
+
+.world-swatch {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  border: 3px solid rgba(0, 0, 0, 0.2);
+  box-shadow: inset -8px -8px 0 rgba(0, 0, 0, 0.15);
+}
+
+.world-name {
+  font-size: 15px;
+  font-weight: bold;
+  color: #1f2d3d;
+  background: rgba(255, 255, 255, 0.85);
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+#character-picker {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.char-btn {
+  width: 110px;
+  padding: 14px 10px 16px;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: transform 0.1s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.char-btn:hover {
+  transform: translateY(-4px);
+}
+
+.char-btn.selected {
+  border-color: #ffd166;
+  box-shadow: 0 0 16px #ffd166;
+}
+
+.char-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.char-head {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.char-body {
+  width: 40px;
+  height: 30px;
+  border-radius: 6px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  margin-top: -2px;
+}
+
+.char-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+}
+
+#play-button {
+  font-size: 24px;
+  padding: 16px 48px;
+  border: none;
+  border-radius: 8px;
+  background: #2a9d8f;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.1s, background 0.2s;
+  box-shadow: 0 6px 0 #1f7a6f;
+}
+
+#play-button:hover {
+  background: #34c0ae;
+}
+
+#play-button:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #1f7a6f;
+}
+
+.controls-help {
+  margin-top: 40px;
+  display: inline-flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 15px;
+  opacity: 0.85;
+  max-width: 560px;
+}
+
+#manual-link {
+  display: inline-block;
+  margin-top: 28px;
+  color: #ffd166;
+  font-size: 16px;
+  text-decoration: none;
+  border-bottom: 2px dotted #ffd166;
+  padding-bottom: 2px;
+}
+
+#manual-link:hover {
+  color: #ffe39a;
+}
+
+#crosshair {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 28px;
+  font-weight: bold;
+  text-shadow: 0 0 3px #000;
+  pointer-events: none;
+  z-index: 5;
+  display: none;
+}
+
+#crosshair.active {
+  display: block;
+}
+
+#save-note {
+  display: none;
+  background: rgba(255, 209, 102, 0.18);
+  border: 2px solid #ffd166;
+  color: #ffe39a;
+  font-size: 15px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+#hud {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
+  gap: 18px;
+  padding: 8px 18px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  color: #fff;
+  font-size: 14px;
+  z-index: 5;
+}
+
+#hud.active {
+  display: flex;
+}
+
+#hud b {
+  display: inline-block;
+  background: #ffd166;
+  color: #1f2d3d;
+  border-radius: 5px;
+  padding: 1px 7px;
+  margin-right: 4px;
+}
+
+#toast {
+  position: fixed;
+  top: 64px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background: rgba(42, 157, 143, 0.95);
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 12px 28px;
+  border-radius: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s, transform 0.25s;
+  z-index: 6;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+#hotbar {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 10px;
+  z-index: 5;
+}
+
+.hotbar-slot {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  transition: transform 0.08s, border-color 0.15s;
+}
+
+.hotbar-slot:hover {
+  transform: translateY(-3px);
+}
+
+.hotbar-slot.selected {
+  border-color: #ffd166;
+  box-shadow: 0 0 12px #ffd166;
+}
+
+.slot-key {
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  font-size: 11px;
+  color: #fff;
+  opacity: 0.7;
+}
+
+.slot-swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.slot-name {
+  font-size: 10px;
+  color: #fff;
+  text-align: center;
+}

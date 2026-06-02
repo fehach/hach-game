@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hach Game</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="overlay">
+      <div id="menu">
+        <h1>HACH GAME</h1>
+        <p class="subtitle">A blocky world built by the Hach family</p>
+        <p id="save-note">Your last build is saved &mdash; click Play to keep going!</p>
+        <p class="picker-label">Choose your world</p>
+        <div id="world-picker"></div>
+        <p class="picker-label">Choose your character</p>
+        <div id="character-picker"></div>
+        <button id="play-button">Click to Play</button>
+        <div class="controls-help">
+          <p><strong>Move:</strong> W A S D</p>
+          <p><strong>Look:</strong> Mouse</p>
+          <p><strong>Jump:</strong> Space</p>
+          <p><strong>Break block:</strong> Left click</p>
+          <p><strong>Place block:</strong> Right click</p>
+          <p><strong>Pick block:</strong> 1-8 or scroll</p>
+          <p><strong>See yourself:</strong> V</p>
+          <p><strong>Save / Load:</strong> O / L</p>
+          <p><strong>Exit mouse:</strong> Esc</p>
+        </div>
+        <a id="manual-link" href="/manual.html" target="_blank">Read the Player's Manual</a>
+      </div>
+    </div>
+    <div id="crosshair">+</div>
+    <div id="hud">
+      <span><b>O</b> Save</span>
+      <span><b>L</b> Load</span>
+      <span><b>V</b> See yourself</span>
+      <span><b>M</b> Mute</span>
+    </div>
+    <div id="toast"></div>
+    <canvas id="game"></canvas>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "_help": "Design characters here! Each character has colors for head, body, arms and legs. Used in a later phase for custom characters.",
+  "defaultCharacter": "hero",
+  "characters": {
+    "hero": {
+      "name": "Hero",
+      "head": "#f1c27d",
+      "body": "#2a9d8f",
+      "arms": "#f1c27d",
+      "legs": "#264653"
+    },
+    "robot": {
+      "name": "Robot",
+      "head": "#bdbdbd",
+      "body": "#607d8b",
+      "arms": "#9e9e9e",
+      "legs": "#455a64"
+    }
+  }
+}
