@@ -30,11 +30,11 @@ Your world **auto-saves** as you play and **auto-loads** next time you open the 
 
 ## For the kids: change the game without coding!
 
-Open the files in the `config/` folder with any text editor. Change a value, save, and refresh the game.
+Open the files in the `public/config/` folder with any text editor. Change a value, save, and refresh the game. (These files are loaded at runtime, so they stay editable even after the game is built/deployed.)
 
-- **`config/blocks.json`** — block names and colors. Try changing `grass` color to `#ff00ff` for pink grass!
-- **`config/worlds.json`** — world themes. Change `defaultWorld` to `"desert"` or `"snow"` to start in a different place. `hilliness` (0 to 1) makes the land flatter or bumpier.
-- **`config/characters.json`** — character colors (used in a later update).
+- **`public/config/blocks.json`** — block names and colors. Try changing `grass` color to `#ff00ff` for pink grass!
+- **`public/config/worlds.json`** — world themes. Change `defaultWorld` to `"desert"` or `"snow"` to start in a different place. `hilliness` (0 to 1) makes the land flatter or bumpier.
+- **`public/config/characters.json`** — extra character presets.
 
 ## Project status
 

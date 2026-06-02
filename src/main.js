@@ -9,9 +9,14 @@ import { sfx } from './sound.js';
 import { NPCManager } from './npc.js';
 import { BuildHelper } from './buildhelper.js';
 
-import blocksConfig from '../config/blocks.json';
-import worldsConfig from '../config/worlds.json';
-import charactersConfig from '../config/characters.json';
+// Config is loaded at runtime (not bundled) so the JSON files stay editable
+// even in a deployed build. BASE_URL keeps paths correct under any subpath.
+const base = import.meta.env.BASE_URL;
+const [blocksConfig, worldsConfig, charactersConfig] = await Promise.all([
+  fetch(`${base}config/blocks.json`).then((r) => r.json()),
+  fetch(`${base}config/worlds.json`).then((r) => r.json()),
+  fetch(`${base}config/characters.json`).then((r) => r.json()),
+]);
 
 // ---- Scene setup ----
 const canvas = document.getElementById('game');

@@ -5,4 +5,8 @@ export default defineConfig({
     port: 5173,
     open: true,
   },
+  build: {
+    // Allow top-level await (used to load config at runtime).
+    target: 'esnext',
+  },
 });
