@@ -6,6 +6,8 @@ import { Character } from './character.js';
 import { CharacterPreview } from './creator.js';
 import { DayNight } from './daynight.js';
 import { sfx } from './sound.js';
+import { NPCManager } from './npc.js';
+import { BuildHelper } from './buildhelper.js';
 
 import blocksConfig from '../config/blocks.json';
 import worldsConfig from '../config/worlds.json';
@@ -39,6 +41,11 @@ let currentWorldId = worldsConfig.defaultWorld;
 let world = null;
 const player = new Player(camera, createWorld(currentWorldId), canvas);
 const interaction = new BlockInteraction(scene, world, player, camera, blocksConfig.blocks);
+
+// ---- NPC creatures + build helper ----
+const npcManager = new NPCManager(scene);
+npcManager.spawn(world);
+const buildHelper = new BuildHelper(world, player);
 
 // ---- Character ----
 const CUSTOM_CHARS_KEY = 'hachCustomChars';
@@ -89,6 +96,8 @@ function loadWorld(worldId) {
   createWorld(worldId);
   player.setWorld(world);
   interaction.setWorld(world);
+  buildHelper.setWorld(world);
+  npcManager.spawn(world);
   updateWorldPicker();
 }
 
@@ -99,6 +108,8 @@ if (import.meta.env.DEV) {
     interaction,
     character,
     dayNight,
+    npcManager,
+    buildHelper,
     loadWorld,
     setCharacter,
     saveGame: (...a) => saveGame(...a),
@@ -297,7 +308,19 @@ document.addEventListener('keydown', (e) => {
   if (e.code === 'KeyO') saveGame();
   if (e.code === 'KeyL') loadGame();
   if (e.code === 'KeyM') toast(sfx.toggleMute() ? 'Sound off' : 'Sound on');
+  if (e.code === 'KeyH') runHelper('house');
+  if (e.code === 'KeyT') runHelper('tree');
+  if (e.code === 'KeyB') runHelper('tower');
 });
+
+// Ask the build-helper agent to construct something in front of the player.
+function runHelper(what) {
+  if (what === 'house') buildHelper.buildHouse();
+  else if (what === 'tree') buildHelper.plantTree();
+  else if (what === 'tower') buildHelper.buildTower();
+  sfx.save();
+  toast(`Helper built a ${what}!`);
+}
 
 // ---- Save / load ----
 const SAVE_KEY = 'hachGameSave';
@@ -394,6 +417,7 @@ function animate() {
   interaction.update();
   character.update(player, dt);
   character.setVisible(player.thirdPerson);
+  npcManager.update(dt, player);
   dayNight.update(dt);
 
   // Auto-save roughly every 15 seconds while playing.

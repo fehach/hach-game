@@ -115,6 +115,21 @@ export class World {
     return true;
   }
 
+  // Set many blocks at once, rebuilding only a single time at the end.
+  // `list` is an array of { x, y, z, id }. Used by the build helper.
+  setBlocksBulk(list) {
+    let changed = 0;
+    for (const b of list) {
+      if (b.y < 0 || !this.inBounds(b.x, b.z)) continue;
+      const key = keyOf(b.x, b.y, b.z);
+      this.voxels.set(key, b.id);
+      this.edits.set(key, b.id);
+      changed++;
+    }
+    if (changed) this.rebuild();
+    return changed;
+  }
+
   // Return only the player's changes, ready to JSON.stringify for saving.
   getEdits() {
     return [...this.edits.entries()];
