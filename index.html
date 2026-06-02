@@ -31,6 +31,41 @@
         <a id="manual-link" href="/manual.html" target="_blank">Read the Player's Manual</a>
       </div>
     </div>
+    <div id="creator-overlay">
+      <div id="creator">
+        <h2>Create Your Character</h2>
+        <div class="creator-body">
+          <canvas id="creator-preview" width="220" height="300"></canvas>
+          <div class="creator-controls">
+            <label class="creator-field">
+              <span>Name</span>
+              <input id="creator-name" type="text" maxlength="16" value="My Character" />
+            </label>
+            <label class="creator-field">
+              <span>Head</span>
+              <input id="creator-head" type="color" value="#f1c27d" />
+            </label>
+            <label class="creator-field">
+              <span>Body</span>
+              <input id="creator-body" type="color" value="#2a9d8f" />
+            </label>
+            <label class="creator-field">
+              <span>Arms</span>
+              <input id="creator-arms" type="color" value="#f1c27d" />
+            </label>
+            <label class="creator-field">
+              <span>Legs</span>
+              <input id="creator-legs" type="color" value="#264653" />
+            </label>
+            <button id="creator-random" class="creator-btn ghost">Surprise me!</button>
+          </div>
+        </div>
+        <div class="creator-actions">
+          <button id="creator-cancel" class="creator-btn ghost">Cancel</button>
+          <button id="creator-save" class="creator-btn">Save Character</button>
+        </div>
+      </div>
+    </div>
     <div id="crosshair">+</div>
     <div id="hud">
       <span><b>O</b> Save</span>

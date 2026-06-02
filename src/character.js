@@ -22,45 +22,59 @@ function makeBox(width, height, depth, color, y) {
   return mesh;
 }
 
+// Build the blocky humanoid as a group with named parts. Reused by both the
+// in-world Character and the Character Creator's live preview.
+export function buildCharacterModel(def) {
+  const group = new THREE.Group();
+
+  // Body proportions (in blocks). Feet sit at group origin (y = 0).
+  const head = makeBox(0.5, 0.5, 0.5, def.head, 1.5);
+  const body = makeBox(0.55, 0.6, 0.3, def.body, 1.0);
+
+  const leftArm = makeLimb(0.2, 0.6, 0.2, def.arms);
+  const rightArm = makeLimb(0.2, 0.6, 0.2, def.arms);
+  leftArm.position.set(-0.375, 1.3, 0);
+  rightArm.position.set(0.375, 1.3, 0);
+
+  const leftLeg = makeLimb(0.22, 0.7, 0.22, def.legs);
+  const rightLeg = makeLimb(0.22, 0.7, 0.22, def.legs);
+  leftLeg.position.set(-0.14, 0.7, 0);
+  rightLeg.position.set(0.14, 0.7, 0);
+
+  group.add(head, body, leftArm, rightArm, leftLeg, rightLeg);
+  return { group, head, body, leftArm, rightArm, leftLeg, rightLeg };
+}
+
+// Recolor a model (the object returned by buildCharacterModel) from a def.
+export function colorCharacterModel(parts, def) {
+  parts.head.userData.material.color.set(def.head);
+  parts.body.userData.material.color.set(def.body);
+  parts.leftArm.userData.material.color.set(def.arms);
+  parts.rightArm.userData.material.color.set(def.arms);
+  parts.leftLeg.userData.material.color.set(def.legs);
+  parts.rightLeg.userData.material.color.set(def.legs);
+}
+
 export class Character {
   constructor(scene, def) {
     this.scene = scene;
-    this.group = new THREE.Group();
     this.time = 0;
 
-    // Body proportions (in blocks). Feet sit at group origin (y = 0).
-    this.head = makeBox(0.5, 0.5, 0.5, def.head, 1.5);
-    this.body = makeBox(0.55, 0.6, 0.3, def.body, 1.0);
+    this.parts = buildCharacterModel(def);
+    this.group = this.parts.group;
+    this.head = this.parts.head;
+    this.body = this.parts.body;
+    this.leftArm = this.parts.leftArm;
+    this.rightArm = this.parts.rightArm;
+    this.leftLeg = this.parts.leftLeg;
+    this.rightLeg = this.parts.rightLeg;
 
-    this.leftArm = makeLimb(0.2, 0.6, 0.2, def.arms);
-    this.rightArm = makeLimb(0.2, 0.6, 0.2, def.arms);
-    this.leftArm.position.set(-0.375, 1.3, 0);
-    this.rightArm.position.set(0.375, 1.3, 0);
-
-    this.leftLeg = makeLimb(0.22, 0.7, 0.22, def.legs);
-    this.rightLeg = makeLimb(0.22, 0.7, 0.22, def.legs);
-    this.leftLeg.position.set(-0.14, 0.7, 0);
-    this.rightLeg.position.set(0.14, 0.7, 0);
-
-    this.group.add(
-      this.head,
-      this.body,
-      this.leftArm,
-      this.rightArm,
-      this.leftLeg,
-      this.rightLeg
-    );
     this.scene.add(this.group);
   }
 
   // Recolor every part from a character definition.
   setColors(def) {
-    this.head.userData.material.color.set(def.head);
-    this.body.userData.material.color.set(def.body);
-    this.leftArm.userData.material.color.set(def.arms);
-    this.rightArm.userData.material.color.set(def.arms);
-    this.leftLeg.userData.material.color.set(def.legs);
-    this.rightLeg.userData.material.color.set(def.legs);
+    colorCharacterModel(this.parts, def);
   }
 
   setVisible(v) {

@@ -15,6 +15,41 @@
       "body": "#607d8b",
       "arms": "#9e9e9e",
       "legs": "#455a64"
+    },
+    "ninja": {
+      "name": "Ninja",
+      "head": "#3a3a3a",
+      "body": "#212121",
+      "arms": "#212121",
+      "legs": "#1a1a1a"
+    },
+    "princess": {
+      "name": "Princess",
+      "head": "#ffe0bd",
+      "body": "#ff7eb9",
+      "arms": "#ffb3d9",
+      "legs": "#c44fa0"
+    },
+    "alien": {
+      "name": "Alien",
+      "head": "#8be34a",
+      "body": "#56b300",
+      "arms": "#8be34a",
+      "legs": "#3d7d00"
+    },
+    "zombie": {
+      "name": "Zombie",
+      "head": "#7da87d",
+      "body": "#4a6b3a",
+      "arms": "#5e8a4e",
+      "legs": "#2f3b24"
+    },
+    "dino": {
+      "name": "Dino",
+      "head": "#43a047",
+      "body": "#2e7d32",
+      "arms": "#43a047",
+      "legs": "#1b5e20"
     }
   }
 }

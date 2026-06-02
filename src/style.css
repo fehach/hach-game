@@ -166,6 +166,145 @@ body {
   color: #fff;
 }
 
+.char-btn.add {
+  justify-content: center;
+  font-size: 34px;
+  color: #ffd166;
+  border-style: dashed;
+}
+
+.char-btn.add .char-name {
+  font-size: 13px;
+  color: #ffd166;
+}
+
+.char-delete {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  line-height: 18px;
+  text-align: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(231, 111, 81, 0.9);
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0;
+}
+
+#creator-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 12, 24, 0.78);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+#creator-overlay.open {
+  display: flex;
+}
+
+#creator {
+  background: #16263a;
+  border: 3px solid #2a9d8f;
+  border-radius: 16px;
+  padding: 24px 28px;
+  width: min(520px, 92vw);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+#creator h2 {
+  color: #ffd166;
+  font-size: 24px;
+  margin-bottom: 18px;
+  text-align: center;
+}
+
+.creator-body {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+}
+
+#creator-preview {
+  width: 220px;
+  height: 300px;
+  background: radial-gradient(circle at 50% 35%, #2b4a63 0%, #16263a 75%);
+  border-radius: 12px;
+  flex: none;
+}
+
+.creator-controls {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.creator-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #fff;
+  font-size: 16px;
+}
+
+.creator-field input[type='color'] {
+  width: 52px;
+  height: 34px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  background: none;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.creator-field input[type='text'] {
+  flex: 1;
+  max-width: 160px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.95);
+  color: #16263a;
+  font-size: 15px;
+}
+
+.creator-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.creator-btn {
+  font-size: 16px;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 9px;
+  background: #2a9d8f;
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #1f7a6f;
+}
+
+.creator-btn.ghost {
+  background: transparent;
+  color: #cfe8e3;
+  border: 2px solid #2a9d8f;
+  box-shadow: none;
+}
+
+.creator-btn:hover {
+  filter: brightness(1.08);
+}
+
 #play-button {
   font-size: 24px;
   padding: 16px 48px;

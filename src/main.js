@@ -3,6 +3,7 @@ import { World } from './world.js';
 import { Player } from './player.js';
 import { BlockInteraction } from './interaction.js';
 import { Character } from './character.js';
+import { CharacterPreview } from './creator.js';
 import { DayNight } from './daynight.js';
 import { sfx } from './sound.js';
 
@@ -40,13 +41,35 @@ const player = new Player(camera, createWorld(currentWorldId), canvas);
 const interaction = new BlockInteraction(scene, world, player, camera, blocksConfig.blocks);
 
 // ---- Character ----
+const CUSTOM_CHARS_KEY = 'hachCustomChars';
+let customChars = loadCustomChars();
+
+function loadCustomChars() {
+  try {
+    return JSON.parse(localStorage.getItem(CUSTOM_CHARS_KEY)) || {};
+  } catch (err) {
+    return {};
+  }
+}
+
+function saveCustomChars() {
+  localStorage.setItem(CUSTOM_CHARS_KEY, JSON.stringify(customChars));
+}
+
+// Presets from config plus the player's own creations.
+function allCharacters() {
+  return { ...charactersConfig.characters, ...customChars };
+}
+
 let currentCharacterId = charactersConfig.defaultCharacter;
-const character = new Character(scene, charactersConfig.characters[currentCharacterId]);
+const character = new Character(scene, allCharacters()[currentCharacterId]);
 character.setVisible(false); // hidden until third-person view
 
 function setCharacter(id) {
+  const def = allCharacters()[id];
+  if (!def) return;
   currentCharacterId = id;
-  character.setColors(charactersConfig.characters[id]);
+  character.setColors(def);
   updateCharacterPicker();
 }
 
@@ -123,22 +146,41 @@ buildWorldPicker();
 
 // ---- Character picker ----
 const charPicker = document.getElementById('character-picker');
-const charButtons = {};
+let charButtons = {};
 
 function buildCharacterPicker() {
-  for (const [id, def] of Object.entries(charactersConfig.characters)) {
+  charPicker.innerHTML = '';
+  charButtons = {};
+
+  for (const [id, def] of Object.entries(allCharacters())) {
+    const isCustom = !!customChars[id];
     const btn = document.createElement('button');
     btn.className = 'char-btn';
     btn.innerHTML = `
+      ${isCustom ? '<span class="char-delete" title="Delete">&times;</span>' : ''}
       <span class="char-figure">
         <span class="char-head" style="background:${def.head}"></span>
         <span class="char-body" style="background:${def.body}"></span>
       </span>
       <span class="char-name">${def.name}</span>`;
     btn.addEventListener('click', () => setCharacter(id));
+    if (isCustom) {
+      btn.querySelector('.char-delete').addEventListener('click', (e) => {
+        e.stopPropagation();
+        deleteCustomChar(id);
+      });
+    }
     charPicker.appendChild(btn);
     charButtons[id] = btn;
   }
+
+  // "Create your own" tile at the end.
+  const addBtn = document.createElement('button');
+  addBtn.className = 'char-btn add';
+  addBtn.innerHTML = '<span>+</span><span class="char-name">Create</span>';
+  addBtn.addEventListener('click', openCreator);
+  charPicker.appendChild(addBtn);
+
   updateCharacterPicker();
 }
 
@@ -148,7 +190,79 @@ function updateCharacterPicker() {
   }
 }
 
+function deleteCustomChar(id) {
+  delete customChars[id];
+  saveCustomChars();
+  if (currentCharacterId === id) setCharacter(charactersConfig.defaultCharacter);
+  buildCharacterPicker();
+}
+
 buildCharacterPicker();
+
+// ---- Character creator ----
+const creatorOverlay = document.getElementById('creator-overlay');
+const creatorPreview = new CharacterPreview(document.getElementById('creator-preview'));
+const creatorInputs = {
+  name: document.getElementById('creator-name'),
+  head: document.getElementById('creator-head'),
+  body: document.getElementById('creator-body'),
+  arms: document.getElementById('creator-arms'),
+  legs: document.getElementById('creator-legs'),
+};
+
+function syncPreviewFromInputs() {
+  creatorPreview.set({
+    name: creatorInputs.name.value,
+    head: creatorInputs.head.value,
+    body: creatorInputs.body.value,
+    arms: creatorInputs.arms.value,
+    legs: creatorInputs.legs.value,
+  });
+}
+
+for (const key of ['head', 'body', 'arms', 'legs']) {
+  creatorInputs[key].addEventListener('input', syncPreviewFromInputs);
+}
+
+function randomColor() {
+  return '#' + Math.floor(Math.random() * 0xffffff).toString(16).padStart(6, '0');
+}
+
+document.getElementById('creator-random').addEventListener('click', () => {
+  creatorInputs.head.value = randomColor();
+  creatorInputs.body.value = randomColor();
+  creatorInputs.arms.value = randomColor();
+  creatorInputs.legs.value = randomColor();
+  syncPreviewFromInputs();
+});
+
+function openCreator() {
+  syncPreviewFromInputs();
+  creatorOverlay.classList.add('open');
+  creatorPreview.start();
+}
+
+function closeCreator() {
+  creatorOverlay.classList.remove('open');
+  creatorPreview.stop();
+}
+
+document.getElementById('creator-cancel').addEventListener('click', closeCreator);
+
+document.getElementById('creator-save').addEventListener('click', () => {
+  const id = 'custom_' + Date.now();
+  customChars[id] = {
+    name: (creatorInputs.name.value || 'My Character').slice(0, 16),
+    head: creatorInputs.head.value,
+    body: creatorInputs.body.value,
+    arms: creatorInputs.arms.value,
+    legs: creatorInputs.legs.value,
+  };
+  saveCustomChars();
+  buildCharacterPicker();
+  setCharacter(id);
+  closeCreator();
+});
 
 // In-game keyboard shortcuts.
 document.addEventListener('keydown', (e) => {
