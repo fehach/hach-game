@@ -46,6 +46,14 @@ body {
   margin-bottom: 8px;
 }
 
+.welcome {
+  font-size: 26px;
+  font-weight: bold;
+  color: #ffd166;
+  text-shadow: 2px 2px 0 #2a9d8f;
+  margin-bottom: 6px;
+}
+
 .subtitle {
   font-size: 18px;
   opacity: 0.8;
