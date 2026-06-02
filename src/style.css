@@ -326,8 +326,24 @@ body {
   box-shadow: 0 2px 0 #1f7a6f;
 }
 
+.volume-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 22px;
+  color: #cfe8e3;
+  font-size: 15px;
+}
+
+.volume-row input[type='range'] {
+  width: 180px;
+  accent-color: #2a9d8f;
+  cursor: pointer;
+}
+
 .controls-help {
-  margin-top: 40px;
+  margin-top: 26px;
   display: inline-flex;
   gap: 24px;
   flex-wrap: wrap;

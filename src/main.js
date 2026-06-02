@@ -113,8 +113,26 @@ const playButton = document.getElementById('play-button');
 
 playButton.addEventListener('click', () => {
   sfx.resume(); // unlock audio on the first user click
+  sfx.click();
   player.lock();
 });
+
+// ---- Volume control ----
+const VOLUME_KEY = 'hachVolume';
+const volumeSlider = document.getElementById('volume');
+const savedVolume = parseFloat(localStorage.getItem(VOLUME_KEY));
+if (!Number.isNaN(savedVolume)) {
+  volumeSlider.value = String(Math.round(savedVolume * 100));
+}
+sfx.setVolume(Number(volumeSlider.value) / 100);
+
+volumeSlider.addEventListener('input', () => {
+  const v = Number(volumeSlider.value) / 100;
+  sfx.resume();
+  sfx.setVolume(v);
+  localStorage.setItem(VOLUME_KEY, String(v));
+});
+volumeSlider.addEventListener('change', () => sfx.click());
 
 // ---- World picker ----
 const picker = document.getElementById('world-picker');
@@ -129,7 +147,11 @@ function buildWorldPicker() {
     btn.innerHTML = `
       <span class="world-swatch" style="background:${surfaceColor}"></span>
       <span class="world-name">${def.name}</span>`;
-    btn.addEventListener('click', () => loadWorld(id));
+    btn.addEventListener('click', () => {
+      sfx.resume();
+      sfx.click();
+      loadWorld(id);
+    });
     picker.appendChild(btn);
     worldButtons[id] = btn;
   }
@@ -163,7 +185,11 @@ function buildCharacterPicker() {
         <span class="char-body" style="background:${def.body}"></span>
       </span>
       <span class="char-name">${def.name}</span>`;
-    btn.addEventListener('click', () => setCharacter(id));
+    btn.addEventListener('click', () => {
+      sfx.resume();
+      sfx.click();
+      setCharacter(id);
+    });
     if (isCustom) {
       btn.querySelector('.char-delete').addEventListener('click', (e) => {
         e.stopPropagation();

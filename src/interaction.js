@@ -99,12 +99,13 @@ export class BlockInteraction {
       if (!hit) return;
       if (e.button === 0) {
         // Left click = break the targeted block.
-        if (this.world.removeBlock(hit.block.x, hit.block.y, hit.block.z)) sfx.break();
+        const id = this.world.getBlock(hit.block.x, hit.block.y, hit.block.z);
+        if (this.world.removeBlock(hit.block.x, hit.block.y, hit.block.z)) sfx.break(id);
       } else if (e.button === 2 && hit.place) {
         // Right click = place a block on the face we are looking at.
         const p = hit.place;
         if (!this._insidePlayer(p.x, p.y, p.z)) {
-          if (this.world.setBlock(p.x, p.y, p.z, this.selectedId)) sfx.place();
+          if (this.world.setBlock(p.x, p.y, p.z, this.selectedId)) sfx.place(this.selectedId);
         }
       }
     });

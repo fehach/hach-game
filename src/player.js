@@ -24,6 +24,9 @@ export class Player {
     this.thirdPerson = false;
     this.cameraDistance = 4;
 
+    this.wasOnGround = true;
+    this.stepTimer = 0;
+
     this.respawn();
 
     this.keys = {};
@@ -129,6 +132,7 @@ export class Player {
       this.velocity.z = 0;
     }
 
+    const fallSpeed = this.velocity.y; // negative while descending
     p.y += this.velocity.y * dt;
     if (this._collides(p.x, p.y, p.z)) {
       const movingDown = this.velocity.y <= 0;
@@ -138,6 +142,30 @@ export class Player {
     } else {
       this.onGround = false;
     }
+
+    // Landing thud after falling a bit.
+    if (this.onGround && !this.wasOnGround && fallSpeed < -6) {
+      sfx.land();
+    }
+
+    // Footsteps while walking on the ground.
+    const horizSpeed = Math.hypot(this.velocity.x, this.velocity.z);
+    if (this.onGround && this.locked && horizSpeed > 0.5) {
+      this.stepTimer += dt;
+      if (this.stepTimer > 0.34) {
+        this.stepTimer = 0;
+        const below = this.world.getBlock(
+          Math.floor(p.x),
+          Math.floor(p.y - 0.2),
+          Math.floor(p.z)
+        );
+        sfx.step(below);
+      }
+    } else {
+      this.stepTimer = 0.34; // so the next step plays promptly
+    }
+
+    this.wasOnGround = this.onGround;
 
     // Respawn if we somehow fall out of the world.
     if (p.y < -20) {
