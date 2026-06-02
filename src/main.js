@@ -133,6 +133,27 @@ playButton.addEventListener('click', () => {
   player.lock();
 });
 
+// ---- New game ----
+const newGameButton = document.getElementById('new-game-button');
+const saveNote = document.getElementById('save-note');
+
+// Show the "continue" note + "new world" button only when a save exists.
+function refreshSaveUI() {
+  const has = hasSave();
+  if (saveNote) saveNote.style.display = has ? 'block' : 'none';
+  newGameButton.style.display = has ? 'inline-block' : 'none';
+}
+
+newGameButton.addEventListener('click', () => {
+  sfx.resume();
+  sfx.click();
+  if (!window.confirm('Start a new world? This will erase your saved build.')) return;
+  localStorage.removeItem(SAVE_KEY);
+  loadWorld(currentWorldId); // regenerate the selected world with no edits
+  refreshSaveUI();
+  player.lock();
+});
+
 // ---- Volume control ----
 const VOLUME_KEY = 'hachVolume';
 const volumeSlider = document.getElementById('volume');
@@ -408,9 +429,8 @@ function toast(msg) {
 // Auto-load the last build so it is waiting when the game opens.
 if (hasSave()) {
   loadGame(false);
-  const note = document.getElementById('save-note');
-  if (note) note.style.display = 'block';
 }
+refreshSaveUI();
 
 // Save when leaving the page so nothing is lost.
 window.addEventListener('beforeunload', () => saveGame(false));
