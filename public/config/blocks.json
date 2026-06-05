@@ -8,6 +8,10 @@
     "snow": { "name": "Snow", "color": "#f4fbff" },
     "wood": { "name": "Wood", "color": "#9c6b3f" },
     "leaves": { "name": "Leaves", "color": "#3f8f3a" },
-    "water": { "name": "Water", "color": "#3a7fd5" }
+    "water": { "name": "Water", "color": "#2f9bb7" },
+    "wildflower": { "name": "Wildflower", "color": "#ffcf4a" },
+    "rose": { "name": "Rose", "color": "#ff5d8f" },
+    "ember": { "name": "Ember", "color": "#ff6b1a" },
+    "marker": { "name": "Marker", "color": "#f7e7b4" }
   }
 }
